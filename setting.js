@@ -1,1 +1,1 @@
-fhirUrl= "http://hapi.fhir.org/baseR4";
+fhirUrl= "https://hapi.fhir.org/baseR4";
