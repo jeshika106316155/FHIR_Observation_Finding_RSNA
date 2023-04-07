@@ -1,0 +1,57 @@
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta content="base ct neck" name="dcterms.title">
+      <meta content="61fbada4-88da-4f98-8d71-2dde038abbbb" name="dcterms.identifier">
+      <meta content="en" name="dcterms.language">
+      <meta content="2019-01-31" name="dcterms.date">
+      <meta content="Nuance System" name="dcterms.creator">
+      <title>base ct neck</title>
+      <script type="text/javascript" src="JSON/JSON_Finding_Observation.js"></script>
+      <script type="text/javascript" src="JS/setting.js"></script>
+   </head>
+   <body>
+      <section data-section-name="FINDINGS:">
+         <header class="Level1">FINDINGS:</header>
+         <p><label>Evaluation limited without intravenous contrast.</label><br><label>PHARYNGEAL MUCOSA: </label><input type="text" name="pharyngeal mucosa" value="Normal nasopharynx, oropharynx and hypopharynx."></p>
+         <p><label>ORAL CAVITY: </label><input type="text" name="oral cavity" value="Normal including tongue and floor of mouth."></p>
+         <p><label>LARYNX: </label><input type="text" name="larynx" value="Normal supraglottic, glottic and subglottic larynx."></p>
+         <p><label>LYMPH NODES: </label><input type="text" name="nodes" value="No suspicious lymph nodes."></p>
+         <p><label>SALIVARY GLANDS: </label><input type="text" name="salivary glands" value="Normal parotid, submandibular and sublingual glands."></p>
+         <p><label>THYROID: </label><input type="text" name="thyroid" value="Normal."></p>
+         <p><label>VESSELS AND CAROTID SPACE: </label><input type="text" name="vessels and carotid space" value="Normal."></p>
+         <p><label>BONES: </label><input type="text" name="bones" value="No significant abnormality."></p>
+         <p><label>OTHER: </label><input type="text" name="other" value="Visualized lung apices are clear. "></p>
+      </section>
+      <button onclick="Submit()">Submit</button>
+   </body>
+   <script>
+    function Submit(){
+      // 把網頁輸入的資料填入JSON
+      FindingObservation.component[1].valueString=document.getElementsByName("pharyngeal mucosa")[0].value;
+      FindingObservation.component[2].valueString=document.getElementsByName("oral cavity")[0].value;
+      // ...請完成它
+      
+      // 把JSON上傳到FHIR伺服器
+      postData(FindingObservation,"Observation")
+    }
+
+      // 上傳資料到FHIR伺服器涵式
+      function postData(jsonString, type) {
+        var xhttp = new XMLHttpRequest();
+        var url = fhirUrl +"/"+type;
+        xhttp.open("POST", url, false);
+        xhttp.setRequestHeader("Content-type", 'application/json+fhir');
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) // && this.status == 201) 
+            {
+                ret = JSON.parse(this.responseText);
+                alert(this.responseText);
+            }
+        };
+        var data = JSON.stringify(jsonString);
+        xhttp.send(data);
+    }
+
+    </script>
+</html>
